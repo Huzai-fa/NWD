@@ -1,0 +1,248 @@
+/* -----------------------
+   RESET & BASE
+------------------------ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+  background-color: #040b1a;
+  color: #ffffff;
+  height: 100%;
+}
+
+/* -----------------------
+   HEADER
+------------------------ */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 86px;
+  z-index: 100;
+  background: linear-gradient(
+    90deg,
+    #071636 0%,
+    #0c2f67 45%,
+    #0a3f7a 100%
+  );
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.header-inner {
+  max-width: 1400px;
+  height: 100%;
+  margin: auto;
+  padding: 0 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand */
+.brand {
+  line-height: 1.1;
+}
+
+.brand-title {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.brand-sub {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* Navigation */
+.nav a {
+  margin-left: 34px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 6px;
+  transition: color 0.3s ease;
+}
+
+.nav a:hover {
+  color: #7fd1ff;
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(to right, #66d0ff, #2fa4ff);
+  transition: width 0.3s ease;
+}
+
+.nav a:hover::after {
+  width: 100%;
+}
+
+/* -----------------------
+   HERO SECTION
+------------------------ */
+.hero {
+  position: relative;
+  height: 100vh;
+  padding-top: 86px;
+  background: url("hero-bg.png") center / cover no-repeat;
+  overflow: hidden;
+}
+
+/* dark cinematic overlay */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to right,
+      rgba(3, 10, 30, 0.92),
+      rgba(3, 10, 30, 0.75),
+      rgba(3, 10, 30, 0.35)
+    );
+  z-index: 1;
+}
+
+/* Content area */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  max-width: 1400px;
+  margin: auto;
+  padding-left: 60px;
+  display: flex;
+  align-items: center;
+}
+
+/* LEFT SIDE */
+.left-content h1 {
+  font-size: 58px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+}
+
+/* Arrow */
+.arrow-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.arrow-box {
+  width: 120px;
+  height: 80px;
+  border: 2px solid #4cc3ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-line {
+  width: 42px;
+  height: 42px;
+  border-left: 4px solid #4cc3ff;
+  border-bottom: 4px solid #4cc3ff;
+  transform: rotate(45deg);
+}
+
+/* -----------------------
+   PERSON IMAGE
+------------------------ */
+.hero-person {
+  position: absolute;
+  right: 60px;
+  bottom: 0;
+  z-index: 2;
+  max-width: 380px;
+}
+
+.hero-person img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6));
+}
+
+/* -----------------------
+   SCROLL INDICATOR
+------------------------ */
+.scroll-indicator {
+  position: absolute;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 44px;
+  border: 2px solid #4cc3ff;
+  border-radius: 20px;
+  z-index: 3;
+}
+
+.scroll-indicator span {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 8px;
+  background: #4cc3ff;
+  border-radius: 6px;
+  animation: scrollMove 1.6s infinite;
+}
+
+@keyframes scrollMove {
+  0% {
+    opacity: 0;
+    top: 8px;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    top: 22px;
+  }
+}
+
+/* -----------------------
+   RESPONSIVE
+------------------------ */
+@media (max-width: 1200px) {
+  .hero-person {
+    display: none;
+  }
+
+  .left-content h1 {
+    font-size: 46px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+
+  .hero-content {
+    padding-left: 30px;
+  }
+
+  .left-content h1 {
+    font-size: 34px;
+  }
+
+  .arrow-box {
+    width: 90px;
+    height: 60px;
+  }
+}

@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Global - Information and communications technology services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="logo.png" rel="icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: #002b5c;
+            padding: 0.5rem 3rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            padding: 0;
+            background: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            width: auto;
+            display: block;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #00d4ff !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00d4ff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: calc(100vh - 80px);
+            background: linear-gradient(135deg, #000d26 0%, #001a4d 50%, #002966 100%);
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 5rem;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-title::before {
+            content: '';
+            position: absolute;
+            left: 5rem;
+            top: 35%;
+            width: 6px;
+            height: 180px;
+            background: linear-gradient(to bottom, transparent, #00d4ff, transparent);
+            animation: slideDown 1.5s ease;
+        }
+
+        .network-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 102, 204, 0.1) 0%, transparent 50%);
+        }
+
+        .world-map {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+        }
+
+        .connection-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            animation: pulse 3s infinite;
+        }
+
+        .connection-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00d4ff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00d4ff;
+            animation: blink 2s infinite;
+        }
+
+        /* Businessman Image - Made Responsive */
+        .businessman {
+            position: absolute;
+            right: 5%;
+            bottom: 0;
+            height: 90%;
+            z-index: 3;
+            animation: fadeIn 1.5s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            width: auto;
+            max-width: 600px;
+        }
+
+        .businessman img {
+            height: 100%;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+            object-position: bottom;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+        }
+
+        /* Navigation Arrows */
+        .nav-arrows {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 4;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-arrow {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00d4ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-arrow:hover {
+            background: rgba(0, 212, 255, 0.4);
+            transform: scale(1.1);
+        }
+
+        .nav-arrow::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+        }
+
+        .nav-arrow.up::before {
+            border-bottom: 12px solid #00d4ff;
+        }
+
+        .nav-arrow.down::before {
+            border-top: 12px solid #00d4ff;
+        }
+
+        /* Lock Icon */
+        .lock-icon {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 50px;
+            z-index: 4;
+        }
+
+        .lock-body {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #001a4d, #003d82);
+            border: 2px solid #00d4ff;
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .lock-shackle {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #00d4ff;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .lock-keyhole {
+            width: 6px;
+            height: 10px;
+            background: #00d4ff;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .lock-keyhole::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 2px;
+            width: 2px;
+            height: 8px;
+            background: #00d4ff;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from {
+                height: 0;
+                opacity: 0;
+            }
+            to {
+                height: 180px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Footer Section */
+        .footer-section {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 600"><rect fill="%23000d26"/></svg>') center/cover;
+            background-color: #000d26;
+            position: relative;
+            padding: 60px 0 30px;
+            color: white;
+            overflow: hidden;
+        }
+
+        .footer-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 600"><defs><radialGradient id="g1"><stop offset="0%" stop-color="%2300d4ff" stop-opacity="0.1"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs><circle cx="400" cy="200" r="300" fill="url(%23g1)"/><circle cx="1500" cy="400" r="400" fill="url(%23g1)"/></svg>') center/cover;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-logo {
+            margin-bottom: 40px;
+        }
+
+        .footer-logo img {
+            height: 60px;
+        }
+
+        .contact-info-box {
+            margin-bottom: 40px;
+        }
+
+        .contact-info-box h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            color: #00d4ff;
+            text-transform: uppercase;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 2px solid #00d4ff;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .contact-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #00d4ff;
+        }
+
+        .contact-text {
+            flex: 1;
+        }
+
+        .contact-text div {
+            margin-bottom: 3px;
+        }
+
+        .address-box {
+            margin-bottom: 30px;
+        }
+
+        .address-box h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            color: #00d4ff;
+        }
+
+        .address-box h4 .building-icon {
+            width: 30px;
+            height: 30px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 2px solid #00d4ff;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .address-box h4 .building-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: #00d4ff;
+        }
+
+        .address-text {
+            padding-left: 40px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Improved address section */
+        .address-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            color: #00d4ff;
+            text-transform: uppercase;
+        }
+
+        .address-card {
+            background: rgba(0, 43, 92, 0.3);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .address-card:hover {
+            transform: translateY(-5px);
+            border-color: #00d4ff;
+        }
+
+        .address-card h5 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #00d4ff;
+            display: flex;
+            align-items: center;
+        }
+
+        .address-card h5 svg {
+            width: 18px;
+            height: 18px;
+            fill: #00d4ff;
+            margin-right: 10px;
+        }
+
+        .address-card p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0;
+        }
+
+        .address-line {
+            margin-bottom: 5px;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0 20px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-nav a:hover {
+            color: #00d4ff;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 2px solid #00d4ff;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            background: rgba(0, 212, 255, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .social-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #00d4ff;
+        }
+
+        .footer-copyright {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design - Updated for all devices */
+        @media (max-width: 1200px) {
+            .businessman {
+                height: 85%;
+                right: 3%;
+                max-width: 500px;
+            }
+            
+            .hero-title {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .businessman {
+                height: 80%;
+                right: 2%;
+                max-width: 400px;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-content {
+                padding: 0 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .hero-content {
+                padding: 0 2rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-title::before {
+                left: 2rem;
+                height: 120px;
+            }
+
+            .businessman {
+                position: relative;
+                height: 60vh;
+                width: 100%;
+                right: auto;
+                bottom: auto;
+                margin-top: 2rem;
+                justify-content: center;
+                max-width: 100%;
+            }
+            
+            .businessman img {
+                height: 100%;
+                width: auto;
+                max-width: 100%;
+            }
+            
+            .nav-arrows {
+                left: 10px;
+            }
+            
+            .nav-link {
+                margin: 0.5rem 0;
+            }
+
+            .footer-nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .contact-info-box,
+            .address-box {
+                margin-bottom: 30px;
+            }
+
+            .contact-item {
+                align-items: flex-start;
+            }
+
+            .address-text {
+                padding-left: 0;
+                margin-top: 10px;
+            }
+
+            .address-box h4 {
+                flex-wrap: wrap;
+            }
+
+            .address-card {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-section {
+                height: auto;
+                min-height: calc(100vh - 80px);
+                padding: 2rem 0;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                justify-content: center;
+                padding: 0 1.5rem;
+                text-align: center;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .hero-title::before {
+                display: none;
+            }
+            
+            .businessman {
+                height: 50vh;
+                margin-top: 1.5rem;
+                order: 2;
+            }
+            
+            .hero-text {
+                order: 1;
+                max-width: 100%;
+            }
+            
+            .contact-icon {
+                width: 35px;
+                height: 35px;
+                margin-right: 10px;
+            }
+
+            .contact-icon svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .address-box h4 .building-icon {
+                width: 25px;
+                height: 25px;
+                margin-right: 8px;
+            }
+            
+            .lock-icon {
+                bottom: 30px;
+                width: 30px;
+                height: 40px;
+            }
+            
+            .lock-body {
+                width: 30px;
+                height: 25px;
+            }
+            
+            .lock-shackle {
+                width: 15px;
+                height: 15px;
+                top: -15px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .businessman {
+                height: 45vh;
+            }
+            
+            .nav-arrow {
+                width: 35px;
+                height: 35px;
+            }
+        }
+        /* ==============================
+   Leader in ICT Services Section
+================================ */
+
+.ict-leader-section {
+    background: #ffffff;
+    padding: 80px 0 90px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Soft faded side visuals */
+.ict-leader-section::before,
+.ict-leader-section::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 260px;
+    height: 420px;
+    background: url("man.png") center / contain no-repeat;
+    opacity: 0.08;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.ict-leader-section::before {
+    left: -80px;
+}
+
+.ict-leader-section::after {
+    right: -80px;
+    transform: translateY(-50%) scaleX(-1);
+}
+
+.ict-intro-text {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.ict-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1b2b4a;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.ict-title span {
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: #002966;
+    margin: 10px auto 0;
+}
+
+.ict-subtitle {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px;
+    font-size: 0.95rem;
+    color: #666;
+}
+
+/* Cards */
+.ict-cards {
+    margin-top: 30px;
+}
+
+.ict-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #000;
+}
+
+.ict-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+}
+
+.ict-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    display: block;
+}
+
+.ict-card-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #002966;
+    color: #fff;
+    text-align: center;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ict-title {
+        font-size: 1.6rem;
+    }
+
+    .ict-intro-text,
+    .ict-subtitle {
+        padding: 0 15px;
+    }
+
+    .ict-card img {
+        height: 200px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="logo.png" alt="IP Global Services">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link " href="about-us.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="clients.html">Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#alliance">Alliance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#careers">Careers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="network-bg"></div>
+        <div class="world-map" id="worldMap"></div>
+        
+        <!-- Navigation Arrows -->
+        <div class="nav-arrows">
+            <div class="nav-arrow up"></div>
+            <div class="nav-arrow down"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">GLOBAL FOOTPRINT</h1>
+            </div>
+        </div>
+
+        <!-- Businessman Image -->
+        <div class="businessman">
+            <img src="man.png" alt="Business Professional">
+        </div>
+
+        <!-- Lock Icon -->
+        <div class="lock-icon">
+            <div class="lock-shackle"></div>
+            <div class="lock-body">
+                <div class="lock-keyhole"></div>
+            </div>
+        </div>
+    </section>
+<!-- Leader in ICT Services Section -->
+<section class="ict-leader-section">
+    <div class="container">
+
+        <p class="ict-intro-text">
+            IP Global Services uses state of the art mechanism to deliver ICT services to the customers across Globe using qualified talent pool and well defined processes. Agility is something which keeps us ahead in delivering complex solutions. Customer success is what we aim for. We focus on to provide best solutions to our clients in their transformational journey by seamless integration of technology, people and process.
+        </p>
+
+        <h2 class="ict-title">
+            Leader in ICT services
+            <span></span>
+        </h2>
+
+        <p class="ict-subtitle">
+            Our history is peppered with milestones, awards and achievements — testament to our continued technological leadership in a complex and dynamic industry.
+        </p>
+
+        <div class="row justify-content-center ict-cards">
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="ict-card">
+                    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d" alt="Integrated Service Delivery">
+                    <div class="ict-card-label">Integrated Service Delivery</div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="ict-card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71" alt="Diversified Industry Portfolio">
+                    <div class="ict-card-label">Diversified Industry Portfolio</div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="ict-card">
+                    <img src="halftone-monochrome-collage.jpg" alt="Technology Mix">
+                    <div class="ict-card-label">Technology Mix</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+    <!-- Footer Section -->
+       <!-- Footer Section -->
+    <footer class="footer-section">
+        <div class="container footer-content">
+            <!-- Contact Info & Addresses Section -->
+            <div class="row mb-5">
+                <!-- Contact Info Column -->
+                <div class="col-12 col-md-3 mb-4">
+                    <div class="contact-info-box">
+                        <h3>CONTACT INFO</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1zM19 12h2c0-4.97-4.03-9-9-9v2c3.87 0 7 3.13 7 7z"/>
+                                </svg>
+                            </div>
+                            <div class="contact-text">
+                                <div>+91 11 4654 8309</div>
+                                <div>+44 (0) 1276 402376</div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                                </svg>
+                            </div>
+                            <div class="contact-text">info@ipgs.net</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADDRESS-UK Column -->
+                <div class="col-12 col-md-3 mb-4">
+                    <div class="address-card">
+                        <h5>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+                            </svg>
+                            ADDRESS - UK
+                        </h5>
+                        <p class="address-line">IP GLOBAL SERVICES LTD</p>
+                        <p class="address-line">1F02 West Wing, Arena Business Centre</p>
+                        <p class="address-line">100 Berkshire Place, Wharfdale Road</p>
+                        <p class="address-line">Winnersh – RG41 5RD</p>
+                    </div>
+
+                    
+                </div>
+
+                <!-- ADDRESS-INDIA Column -->
+                 
+                <div class="col-12 col-md-3 mb-4">
+                    <div class="address-card">
+                        <h5>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+                            </svg>
+                            ADDRESS - INDIA
+                        </h5>
+                        <p class="address-line">IPGST INDIA PRIVATE LIMITED</p>
+                        <p class="address-line">207, Pearls Best Heights-1</p>
+                        <p class="address-line">Netaji Subhash Place, Pitampura</p>
+                        <p class="address-line">New Delhi-110034</p>
+                    </div>
+                </div>
+
+                <!-- ADDRESS-UAE Column -->
+                <div class="col-12 col-md-3 mb-4">
+                    <div class="address-card">
+                        <h5>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+                            </svg>
+                            ADDRESS - UAE
+                        </h5>
+                        <p class="address-line">IP GLOBAL SERVICES SP. Z.O.O.</p>
+                        <p class="address-line">ul. PAWVA WYODKOWICA, No. 8, LU101</p>
+                        <p class="address-line">postal code 31-452, Krakow, Poland</p>
+                         
+                    </div>
+
+                    
+                </div>
+                   <div class="col-12 col-md-3 mb-4">
+                  
+                </div>
+
+                <!-- ADDRESS-POLAND Column - Removed offset and placed properly -->
+                <div class="col-12 col-md-3 mb-4">
+                    <div class="address-card">
+                        <h5>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+                            </svg>
+                            ADDRESS - POLAND
+                        </h5>
+                        <p class="address-line">IP GLOBAL SP. Z O.O.</p>
+                        <p class="address-line">UNIT 1 22 GRAEME AV</p>
+                        <p class="address-line">MONTMORENCY VIC 3094</p>
+                        <p class="address-line">Australia</p>
+                    </div>
+                </div>
+                  
+            </div>
+
+            <!-- Footer Navigation -->
+            <div class="footer-nav">
+                <a href="#about">About Us</a>
+                <a href="#services">Services</a>
+                <a href="#clients">Clients</a>
+                <a href="#alliance">Alliance</a>
+                <a href="#careers">Careers</a>
+                <a href="#contact">Contact Us</a>
+            </div>
+
+            <!-- Social Icons -->
+            <div class="social-icons">
+                <a href="#" class="social-icon" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"/>
+                    </svg>
+                </a>
+                <a href="#" class="social-icon" aria-label="Twitter">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22.46 6c-.85.38-1.78.64-2.75.76 1-.6 1.76-1.55 2.12-2.68-.93.55-1.96.96-3.06 1.18C17.92 4.37 16.77 3.75 15.5 3.75c-2.53 0-4.58 2.05-4.58 4.58 0 .36.04.7.11 1.04-3.81-.19-7.19-2.02-9.45-4.79-.39.67-.62 1.45-.62 2.28 0 1.59.81 2.99 2.03 3.81-.75-.02-1.45-.23-2.07-.57v.06c0 2.22 1.58 4.07 3.67 4.49-.38.1-.79.16-1.21.16-.3 0-.59-.03-.87-.08.59 1.84 2.29 3.18 4.31 3.22-1.58 1.23-3.56 1.97-5.72 1.97-.37 0-.74-.02-1.1-.06 2.04 1.31 4.46 2.07 7.06 2.07 8.46 0 13.09-7.01 13.09-13.09 0-.2 0-.39-.01-.59.9-.65 1.68-1.46 2.3-2.38z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Copyright -->
+            <div class="footer-copyright">
+                © 2020 IPGlobal Services All Rights Reserved
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Create world map with connection lines
+    const worldMap = document.getElementById('worldMap');
+    
+    // Create connection dots
+    const dots = [
+        {x: 15, y: 30}, {x: 25, y: 35}, {x: 35, y: 25}, {x: 45, y: 40},
+        {x: 55, y: 30}, {x: 65, y: 45}, {x: 75, y: 35}, {x: 85, y: 50}
+    ];
+
+    dots.forEach((dot, i) => {
+        const dotEl = document.createElement('div');
+        dotEl.className = 'connection-dot';
+        dotEl.style.left = dot.x + '%';
+        dotEl.style.top = dot.y + '%';
+        dotEl.style.animationDelay = (i * 0.3) + 's';
+        worldMap.appendChild(dotEl);
+
+        // Create lines between adjacent dots
+        if (i < dots.length - 1) {
+            const line = document.createElement('div');
+            line.className = 'connection-line';
+            const x1 = dot.x;
+            const y1 = dot.y;
+            const x2 = dots[i + 1].x;
+            const y2 = dots[i + 1].y;
+            
+            const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+            
+            line.style.width = length + '%';
+            line.style.left = x1 + '%';
+            line.style.top = y1 + '%';
+            line.style.transform = `rotate(${angle}deg)`;
+            line.style.transformOrigin = '0 0';
+            line.style.animationDelay = (i * 0.3) + 's';
+            worldMap.appendChild(line);
+        }
+    });
+
+    // Smooth scroll for navigation - only for internal hash links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Only prevent default for hash links (internal page navigation)
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Scroll to section
+                const targetElement = document.querySelector(href);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+            // For external links like services.html, let the default behavior happen
+            // No need to prevent default or add active class
+        });
+    });
+
+    // Arrow navigation
+    document.querySelectorAll('.nav-arrow').forEach(arrow => {
+        arrow.addEventListener('click', function() {
+            const direction = this.classList.contains('up') ? -1 : 1;
+            window.scrollBy({
+                top: direction * window.innerHeight,
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Set active nav link based on scroll position
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.scrollY >= (sectionTop - 100)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+</body>
+</html>
